@@ -1,49 +1,48 @@
 <script>
     import Card from "../shared/Card.svelte";
-import  Button from "../shared/Button.svelte";
-import PollStore from "../stores/PollStore.js";
-import { tweened } from 'svelte/motion'
+    import  Button from "../shared/Button.svelte";
+    import PollStore from "../stores/PollStore.js";
+    import { tweened } from 'svelte/motion'
 
-export let poll;
+    export let poll;
 
 
-// reactive value
-$: totalVotes = poll.votesA + poll.votesB;
-$: percentA = Math.floor(100 / totalVotes * poll.votesA) || 0;
-$: percentB = Math.floor(100 / totalVotes * poll.votesB) || 0;
+    // reactive value
+    $: totalVotes = poll.votesA + poll.votesB;
+    $: percentA = Math.floor(100 / totalVotes * poll.votesA) || 0;
+    $: percentB = Math.floor(100 / totalVotes * poll.votesB) || 0;
 
-// tweened percentages
-const tweenedA = tweened(0);
-const tweenedB = tweened(0);
+    // tweened percentages
+    const tweenedA = tweened(0);
+    const tweenedB = tweened(0);
 
-$: tweenedA.set(percentA);
-$: tweenedB.set(percentB);
+    $: tweenedA.set(percentA);
+    $: tweenedB.set(percentB);
 
-// $: console.log($tweenedA, $tweenedB);
+    // $: console.log($tweenedA, $tweenedB);
 
-// handling votes
-function handleVote (option, id) {
-    PollStore.update(currentPolls => {
-        let copiedPolls = [...currentPolls];
-        let upvotedPoll = copiedPolls.find((poll) => poll.id == id);
+    // handling votes
+    function handleVote (option, id) {
+        PollStore.update(currentPolls => {
+            let copiedPolls = [...currentPolls];
+            let upvotedPoll = copiedPolls.find((poll) => poll.id == id);
 
-        if (option === 'a') {
-            upvotedPoll.votesA++;
-        }
-        if (option === 'b') {
-            upvotedPoll.votesB++;
-        }
+            if (option === 'a') {
+                upvotedPoll.votesA++;
+            }
+            if (option === 'b') {
+                upvotedPoll.votesB++;
+            }
 
-        return copiedPolls;
-    });
-}
+            return copiedPolls;
+        });
+    }
 
-function handleDelete(id) {
-    PollStore.update(currentPolls => {
-        return currentPolls.filter(poll => poll.id != id);
-    })
-}
-
+    function handleDelete(id) {
+        PollStore.update(currentPolls => {
+            return currentPolls.filter(poll => poll.id != id);
+        })
+    }
 
 </script>
 <Card>

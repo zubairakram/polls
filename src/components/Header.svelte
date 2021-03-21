@@ -2,8 +2,8 @@
 <header>
     <h1>
         <img src="/img/ninja.svg" alt="">
-    </h1>
-</header>
+        </h1>
+    </header>
 <style>
     header {
         background: #f7f7f7;
